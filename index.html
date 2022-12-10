@@ -57,6 +57,7 @@
                         class="pos_relative">
                     <span x-show="cartItems.length > 0" x-cloak x-text="cartItems.length"
                           class="[ item_count badge ][ bg_primary round_md pos_absolute ]">0</span>
+                    <span class="visually_hidden">open cart</span>
                     <img src="images/icon-cart.svg" alt="">
                 </button>
 
@@ -94,7 +95,9 @@
                         </div>
                     </div>
                 </article>
-                <button id="userActions"><img src="images/image-avatar.png" alt=""></button>
+                <button id="userActions"><img src="images/image-avatar.png" alt="">
+                    <span class="visually_hidden">user actions</span>
+                </button>
             </div>
         </nav>
 
