@@ -1,0 +1,39 @@
+@use "utils";
+
+.d_block {
+    display: block;
+}
+
+.d_inline {
+    display: inline;
+}
+
+/* FLEXBOX */
+.d_flex {
+    display: flex;
+
+    & .no_shrink {
+        flex-shrink: 0;
+    }
+
+    & .shrink {
+        flex-shrink: 1;
+    }
+}
+
+.justify_between {
+    justify-content: space-between;
+}
+
+.justify_center {
+    justify-content: center;
+}
+
+.align_center {
+    align-items: center;
+}
+
+.container {
+    padding-inline: clamp(calc(1.5rem - map-get(utils.$size, 'sm')/2), 1.5vw, 1.5rem);
+    padding-block: var(--padding-block, 1rem);
+}

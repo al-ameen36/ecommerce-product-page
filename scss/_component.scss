@@ -1,0 +1,14 @@
+@use "_utils";
+
+.badge {
+    font-weight: map-get(utils.$font-weight, "bold");
+    padding-block: var(--padding-block, .15rem);
+    padding-inline: .5rem;
+}
+
+.modal {
+    border: 1px solid map-get(utils.$color, 'secondary');
+    position: absolute;
+    right: .75rem;
+    width: var(--width, calc(utils.$mobile-screen - 1.5rem));
+}

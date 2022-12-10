@@ -1,0 +1,162 @@
+@use "_carousel";
+@use "_layout";
+@use "_nav";
+@use "_component";
+@use "_cart";
+@use "_utils";
+
+/* GLOBAL */
+body {
+    font: 16px "Kumbh Sans", sans-serif;
+    line-height: 1.618;
+    color: map-get(utils.$color, 'copy');
+}
+
+[x-cloak] {
+    display: none;
+}
+
+h1 {
+    line-height: 1;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+img:not([class]) {
+    max-height: 100%;
+}
+
+button {
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    display: inline-block;
+    text-decoration-color: transparent;
+
+    &:focus,
+    &:hover {
+        text-decoration-color: initial;
+    }
+}
+
+#page {
+    max-width: 1150px;
+    margin-inline: auto;
+}
+
+.backdrop {
+    background-color: rgba(0, 0, 0, .75);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+/* OTHER STYLES */
+.content {
+    padding: 1.5rem;
+    margin-inline: auto;
+    max-width: 550px;
+
+    &>*+* {
+        margin-block-start: 1rem;
+    }
+
+    .company_name {
+        font-size: .8em;
+        letter-spacing: 1px;
+    }
+
+    .product_name {
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+    }
+
+    .list_price {
+        font-size: 1.8rem;
+
+        & .badge {
+            font-size: 1rem;
+            margin-inline-start: 1rem;
+        }
+    }
+
+    #addItem_btn {
+        margin-block-start: 1rem;
+    }
+
+    .actions {
+        button {
+            height: utils.$btn-height;
+            padding-inline: 1.5rem;
+        }
+    }
+
+    #addItem_btn {
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    #page {
+        padding-inline: 1rem;
+    }
+
+    main {
+        align-items: center;
+        display: flex;
+        gap: clamp(2rem, 10vw, 7.5rem);
+        justify-content: center;
+
+        &>* {
+            max-width: 450px;
+        }
+    }
+
+    .content {
+        margin-inline: 0;
+        max-width: 450px;
+        padding: 0;
+
+        &>*+* {
+            margin-block-start: 2rem;
+        }
+    }
+
+    .product_name {
+        margin-block-start: 1rem;
+    }
+
+    .actions {
+        display: flex;
+        gap: 1rem;
+
+        .quantity {
+            width: 160px;
+
+            & button {
+                flex-shrink: 0;
+            }
+        }
+
+        #addItem_btn {
+            margin-block-start: 0;
+            width: 270px;
+        }
+    }
+
+    .prices {
+        display: block;
+    }
+}

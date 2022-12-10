@@ -1,0 +1,121 @@
+@use '_utils';
+
+.carousel {
+    overflow: hidden;
+
+    .controls {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        z-index: 1;
+
+        & button {
+            background-color: map-get(utils.$color, 'white');
+            border-radius: 50%;
+            align-items: center;
+            display: flex;
+            font-size: 1.25rem;
+            justify-content: center;
+            height: clamp(40px, 6vw, 70px);
+            width: clamp(40px, 6vw, 70px);
+        }
+    }
+
+    &_inner {
+        width: 100%;
+
+        & img {
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+    }
+
+    &_item {
+        flex: 1 0 100%;
+        height: 300px;
+        height: min(300px, 70vh);
+        overflow: hidden;
+    }
+
+    &_lightBox {
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        z-index: 97;
+        height: auto;
+        width: min(550px, 85vw);
+
+        & .controls {
+            padding: 0;
+        }
+
+        & .nextBtn {
+            margin-inline-end: -35px;
+        }
+
+        & .prevBtn {
+            margin-inline-start: -35px;
+        }
+
+        &~.backdrop {
+            background-color: rgba(0, 0, 0, .5);
+            height: 100vh;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            z-index: 96;
+        }
+
+        & #close_lightBox {
+            color: #fff;
+            font-size: 2rem;
+        }
+    }
+
+    &_thumbnails {
+        gap: min(1.5rem, 2vw);
+        padding: min(2rem, 2vw);
+
+    }
+
+    .thumbnail {
+        border: 2px solid transparent;
+        cursor: pointer;
+        position: relative;
+
+        &::before {
+            content: '';
+            background-color: #fff;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        &:hover::before {
+            opacity: .7;
+        }
+
+        &.active {
+            border: 2px solid map-get(utils.$color, 'primary');
+
+            &::before {
+                opacity: .7;
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .carousel_item {
+        height: auto;
+        border-radius: map-get(utils.$radius, 'md');
+    }
+
+    .carousel_thumbnails {
+        padding-inline: 0;
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "starter-files",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sass --no-source-map scss/style.scss css/style.css",
+    "watch": "sass --no-source-map --watch scss/style.scss css/style.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.55.0"
+  }
+}

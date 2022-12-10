@@ -1,0 +1,54 @@
+@use "_utils";
+
+.cart {
+    top: 5.5rem;
+    background-color: #fff;
+    z-index: 99;
+
+    & .modal_body,
+    &_empty {
+        min-height: 200px;
+        padding-inline: 1rem;
+    }
+
+    & .modal_header {
+        border-bottom: 1px solid #ebebeb;
+        padding-block: 1.5rem;
+    }
+
+    .cart_item:not(first-child) {
+        margin-top: 1rem;
+    }
+
+    & img {
+        width: min(100%, 3rem);
+        border-radius: map-get(utils.$radius, 'xs');
+    }
+
+    & .name {
+        font: inherit;
+        max-width: 21ch;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    & .item_details {
+        margin-inline-start: 1rem;
+    }
+
+    #checkout {
+        border-radius: map-get(utils.$radius, 'sm-2');
+        color: #fff;
+        font-weight: map-get(utils.$font-weight, 'bold');
+        height: utils.$btn-height;
+        margin-block-start: 1.5rem;
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .cart {
+        top: 7rem;
+    }
+}

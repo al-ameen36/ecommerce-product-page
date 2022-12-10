@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Frontend mentor solution to the ECommerce product page challenge">
+    <title>ECommerce product page</title>
+    <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="page">
+        <nav x-data="{
+                menuOpen: false,
+                modalOpen: false,
+            }"
+             class="[ container d_flex align_center justify_between ]"
+             aria-label="main">
+            <div class="d_flex align_center">
+                <button @click="menuOpen = true" class="mobile_only">
+                    <img src="images/icon-menu.svg" alt="">
+                </button>
+                <a id="logo" href="#"><img src="images/logo.svg" alt="">
+                    <span class="visually_hidden">sneakers</span>
+                </a>
+            </div>
+            <div :class="menuOpen && 'open'" x-cloak
+                 class="[ nav_menu ][ bg_white pos_fixed shadow_sm transition ]">
+                <button @click="menuOpen = false"
+                        id="close_menu" class="mobile_only">
+                    <img src="images/icon-close.svg" alt="">
+                </button>
+                <ul class="nav_list" role="menubar">
+                    <li role="none"><a href="#" role="menuitem">Collections</a></li>
+                    <li role="none"><a href="#" role="menuitem">Men</a></li>
+                    <li role="none"><a href="#" role="menuitem">Women</a></li>
+                    <li role="none"><a href="#" role="menuitem">About</a></li>
+                    <li role="none"><a href="#" role="menuitem">Contact</a></li>
+                </ul>
+            </div>
+            <div @click="menuOpen = false" class="backdrop"></div>
+            <!-- cart x-data defined in js/script.js -->
+            <div x-data="{ cartItems: Alpine.store('cart').items }"
+                 class="d_flex align_center">
+                <button @click="modalOpen = true"
+                        class="pos_relative">
+                    <span x-show="cartItems.length > 0" x-cloak x-text="cartItems.length"
+                          class="[ item_count badge ][ bg_primary round_md pos_absolute ]">0</span>
+                    <img src="images/icon-cart.svg" alt="">
+                </button>
+
+                <!-- CART MODAL -->
+                <article x-show="modalOpen" x-cloak @click.outside="modalOpen = false"
+                         class="[ cart modal ][ round_sm pos_absolute shadow_sm ]">
+                    <div class="modal_header container">
+                        <p class="text_heading fw_bold">
+                            Cart
+                        </p>
+                    </div>
+                    <div class="modal_body container">
+                        <p x-show="cartItems.length < 1" x-cloak
+                           class="[ cart_empty ][ d_flex align_center justify_center ]">
+                            Your cart is empty
+                        </p>
+                        <div x-show="cartItems.length > 0" x-cloak class="cart_list">
+                            <template x-for="item in cartItems">
+                                <div :id="'item-'+item.id" class="cart_item d_flex">
+                                    <div class="d_flex align_center overflow_hidden">
+                                        <img :src="item.image"
+                                             :alt="item.name">
+                                        <div class="item_details">
+                                            <h3 x-text="item.name" class="name"></h3>
+                                            <span x-html="$store.cart.formatPrices(item.id - 1)"></span>
+                                        </div>
+                                    </div>
+                                    <button @click="$store.cart.removeItem(item.id - 1)"
+                                            class="no_shrink">
+                                        <img src="images/icon-delete.svg" alt="" aria-hidden="true">
+                                    </button>
+                                </div>
+                            </template>
+                            <button id="checkout" class="bg_primary">Checkout</button>
+                        </div>
+                    </div>
+                </article>
+                <button id="userActions"><img src="images/image-avatar.png" alt=""></button>
+            </div>
+        </nav>
+
+        <main>
+            <!-- carousel x-data defined in js/script.js -->
+            <!-- carousel -->
+            <section x-data="carousel"
+                     class="carousel" aria-hidden="true"
+                     aria-label="product image carousel">
+                <div class="pos_relative">
+                    <div class="[ controls ][ container d_flex justify_between ][ mobile_only ]">
+                        <button class="[ prevBtn ][ shadow_sm ]" @click="prev()">
+                            <img class="icon_sm" src="images/icon-previous.svg" alt="">
+                        </button>
+                        <button class="[ nextBtn ][ shadow_sm ]" @click="next()">
+                            <img class="icon_sm" src="images/icon-next.svg" alt="">
+                        </button>
+                    </div>
+                    <div @click="openLightBox = true" class="[ carousel_inner ][ d_flex gap_0 ][ transition ]"
+                         :style="{transform: slide()}">
+                        <div class="carousel_item active">
+                            <img src="images/image-product-1.jpg" alt="...">
+                        </div>
+                        <div class="carousel_item">
+                            <img src="images/image-product-2.jpg" alt="...">
+                        </div>
+                        <div class="carousel_item">
+                            <img src="images/image-product-3.jpg" alt="...">
+                        </div>
+                        <div class="carousel_item">
+                            <img src="images/image-product-4.jpg" alt="...">
+                        </div>
+                    </div>
+                </div>
+                <div class="[ carousel_thumbnails ][ d_flex ][ desktop_only ]">
+                    <div @click="activeSlide = 0"
+                         :class="activeSlide == 0 ? 'active': ''"
+                         class="[ thumbnail ][ round_md overflow_hidden ]">
+                        <img class="" src="images/image-product-1-thumbnail.jpg" alt="...">
+                    </div>
+                    <div class="[ thumbnail ][ round_md overflow_hidden ]"
+                         :class="activeSlide == 1 ? 'active': ''"
+                         @click="activeSlide = 1">
+                        <img class="" src="images/image-product-2-thumbnail.jpg" alt="...">
+                    </div>
+                    <div class="[ thumbnail ][ round_md overflow_hidden ]"
+                         :class="activeSlide == 2 ? 'active': ''"
+                         @click="activeSlide = 2">
+                        <img class="" src="images/image-product-3-thumbnail.jpg" alt="...">
+                    </div>
+                    <div class="[ thumbnail ][ round_md overflow_hidden ]"
+                         :class="activeSlide == 3 ? 'active': ''"
+                         @click="activeSlide = 3">
+                        <img class="" src="images/image-product-4-thumbnail.jpg" alt="...">
+                    </div>
+                </div>
+                <template x-teleport="#page">
+                    <article x-show="openLightBox" x-cloak>
+                        <div
+                             x-data="carousel_lightBox"
+                             class="[ carousel carousel_lightBox ][ pos_absolute overflow_visible ]"
+                             aria-hidden="true">
+                            <button id="close_lightBox" @click="openLightBox = false"
+                                    class="text_right d_block bg_transparent w_100 hover_color_primary">
+                                &times;
+                            </button>
+                            <div class="pos_relative">
+                                <div class="[ controls ][ container d_flex justify_between ]">
+                                    <button class="prevBtn hover_color_primary" @click="prev()">
+                                        <span class="fa fa-chevron-left"></span>
+                                    </button>
+                                    <button class="nextBtn hover_color_primary" @click="next()">
+                                        <span class="fa fa-chevron-right"></span>
+                                </div>
+                                <div class="overflow_hidden">
+                                    <div class="carousel_inner d_flex transition"
+                                         :style="{transform: slide()}">
+                                        <div class="carousel_item active">
+                                            <img src="images/image-product-1.jpg" alt="...">
+                                        </div>
+                                        <div class="carousel_item">
+                                            <img src="images/image-product-2.jpg" alt="...">
+                                        </div>
+                                        <div class="carousel_item">
+                                            <img src="images/image-product-3.jpg" alt="...">
+                                        </div>
+                                        <div class="carousel_item">
+                                            <img src="images/image-product-4.jpg" alt="...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="[ carousel_thumbnails ][ d_flex ]">
+                                <div @click="activeSlide = 0"
+                                     :class="activeSlide == 0 ? 'active': ''"
+                                     class="[ thumbnail ][ round_md overflow_hidden ]">
+                                    <img class="" src="images/image-product-1-thumbnail.jpg" alt="...">
+                                </div>
+                                <div class="[ thumbnail ][ round_md overflow_hidden ]"
+                                     :class="activeSlide == 1 ? 'active': ''"
+                                     @click="activeSlide = 1">
+                                    <img class="" src="images/image-product-2-thumbnail.jpg" alt="...">
+                                </div>
+                                <div class="[ thumbnail ][ round_md overflow_hidden ]"
+                                     :class="activeSlide == 2 ? 'active': ''"
+                                     @click="activeSlide = 2">
+                                    <img class="" src="images/image-product-3-thumbnail.jpg" alt="...">
+                                </div>
+                                <div class="[ thumbnail ][ round_md overflow_hidden ]"
+                                     :class="activeSlide == 3 ? 'active': ''"
+                                     @click="activeSlide = 3">
+                                    <img class="" src="images/image-product-4-thumbnail.jpg" alt="...">
+                                </div>
+                            </div>
+                        </div>
+                        <div @click="openLightBox = false" class="backdrop"></div>
+                    </article>
+                </template>
+            </section>
+
+            <section class="content"></section>
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/alpine.min.js"></script>
+</body>
+
+</html>
