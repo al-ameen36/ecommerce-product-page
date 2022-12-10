@@ -2,7 +2,7 @@
 document.addEventListener('alpine:init', () => {
     let retrievedItem;
     (async function getItemInfoFromJSON() {
-        retrievedItem = await (await fetch('../data.json')).json()
+        retrievedItem = await (await fetch('data.json')).json()
         getAndDisplayProduct()
     })()
 
